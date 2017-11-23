@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>android sql 管理</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-table.min.js"></script>
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="js/toastr.js"></script>
+
+
+    <style type="text/css">
+			.list-group-item {
+				word-break: break-all;
+			}
+
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-default" role="navigation" style="margin-top: -1px;">
+    <div class="container-fluid" style="background-color: #29b6f6;border-radius: 0px;">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="color: #fff;">android sql 管理</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <input type="text" class="form-control" id="query" placeholder="请输入查询语句"/>
+    <div style="margin-top: 16px;">
+        <button id="selected-db-info" type="button" class="btn btn-info disabled"
+                onclick="downloaddb()" style="background-color: #29b6f6;" data-toggle="tooltip"
+                title="点击可下载数据库">当前没选择数据库
+        </button>
+        <button id="query_bt" type="submit" class="btn btn-info pull-right"
+                style="width: 120px;background-color: #29b6f6;">查询
+        </button>
+
+    </div>
+    <div class="row" style="margin-top: 16px;">
+        <div class="col-sm-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">数据库</div>
+            </div>
+            <div id="db-list" class="list-group">
+
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">表名称</div>
+            </div>
+            <div id="table-list" class="list-group">
+            </div>
+        </div>
+
+        <div id="parent-data-div" class="col-sm-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">表数据</div>
+            </div>
+            <div id="toolbar" class="btn-group hidden">
+                <button id="btn_add" type="button" class="btn btn-default" data-target="#add_modal"
+                        onclick="addDataform()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" id="add_modal" tabindex="-1" role="dialog"
+                     aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    新增数据
+                                </h4>
+                            </div>
+                            <div class="modal-body" id="add-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    取消
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="addData()">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- /.modal -->
+
+                <button id="btn_edit" type="button" class="btn btn-default "
+                        onclick="editDataform()" data-target="#edit_modal">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog"
+                     aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    修改数据
+                                </h4>
+                            </div>
+                            <div class="modal-body" id="edit_body">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    取消
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="editData()">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- /.modal -->
+
+                <button id="btn_delete" type="button" class="btn btn-default"
+                        onclick="delDataFrom()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" id="del_modal" tabindex="-1" role="dialog"
+                     aria-labelledby="delModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    删除数据
+                                </h4>
+                            </div>
+                            <div class="modal-body" id="del_body">
+                                <div class="warning">
+                                    <span> 是否删除该数据</span>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    取消
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="delData()">
+                                    确定
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- /.modal -->
+
+            </div>
+            <table class="table table-hover" id="table_datas" data-toggle="table"
+                   data-toolbar="#toolbar"></table>
+        </div>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>
