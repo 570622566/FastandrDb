@@ -20,7 +20,7 @@ import java.util.Set;
  * @author laijian
  * @version 2017/9/19
  * @Copyright (C)下午2:54 , www.hotapk.cn
- * 数据库导出
+ * 数据库操作
  */
 public final class FDatabaseUtils {
 

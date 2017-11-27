@@ -4,6 +4,7 @@ package com.pcitech.fastandr_dbms.utils;
  * @author laijian
  * @version 2017/11/24
  * @Copyright (C)下午10:04 , www.hotapk.cn
+ * 一些常量
  */
 public class FConstant {
     public static final String SHAREDPREFS_XML = "SHAREDPREFS_XML";

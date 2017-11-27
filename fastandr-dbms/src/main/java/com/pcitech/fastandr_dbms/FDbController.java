@@ -10,6 +10,7 @@ import java.util.Map;
  * @author laijian
  * @version 2017/11/25
  * @Copyright (C)上午1:19 , www.hotapk.cn
+ * web数据操作
  */
 public class FDbController {
 

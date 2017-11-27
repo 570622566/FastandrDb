@@ -130,7 +130,6 @@ function getTablesDatas(tablename) {
 				pagination: true,
 				pageList: [],
 				pageNumber: 1,
-				height: 580,
 				search: true,
 				pageSize: 10, //每页显示的数量
 				paginationPreText: "上一页",

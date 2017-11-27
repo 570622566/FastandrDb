@@ -6,6 +6,7 @@ import android.app.Application;
  * @author laijian
  * @version 2017/9/18
  * @Copyright (C)下午4:56 , www.hotapk.cn
+ * 初始化
  */
 public class FDbUtils {
 

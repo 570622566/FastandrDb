@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         FPermissionUtils.requestPermissions(this, 200, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE}, new FPermissionUtils.OnPermissionListener() {
             @Override
             public void onPermissionGranted() {
-                iptv.setText(FNetworkUtils.getIPAddress(true));
+                iptv.setText("内网打开：http://"+FNetworkUtils.getIPAddress(true) + ":8888");
             }
 
             @Override

@@ -1,13 +1,12 @@
 package com.pcitech.fastandr_dbms.utils;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author laijian
  * @version 2017/9/12
  * @Copyright (C)上午11:18 , www.hotapk.cn
- * assets raw 相关操作类
+ * assets 相关操作类
  */
 public final class FAssetsUtils {
     private FAssetsUtils() {

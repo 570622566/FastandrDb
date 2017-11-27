@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.pcitech.fastandr_dbms.bean.ResponseData;
-import com.pcitech.fastandr_dbms.utils.FConstant;
 import com.pcitech.fastandr_dbms.utils.NanoHTTPD;
 import com.pcitech.fastandr_dbms.utils.RequestMapping;
 

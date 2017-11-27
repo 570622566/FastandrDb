@@ -4,6 +4,7 @@ package com.pcitech.fastandr_dbms.bean;
  * @author laijian
  * @version 2017/11/12
  * @Copyright (C)上午2:35 , www.hotapk.cn
+ * 获取数据库字段
  */
 public class FieldInfor {
 
