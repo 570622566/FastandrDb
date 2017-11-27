@@ -14,7 +14,6 @@ public final class FAssetsUtils {
 
     }
 
-
     /**
      * 读取assets文件内容
      *

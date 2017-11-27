@@ -5,16 +5,16 @@ package com.pcitech.fastandr_dbms.bean;
  * @version 2017/11/12
  * @Copyright (C)上午2:35 , www.hotapk.cn
  */
-public class SqlFieldInfor {
+public class FieldInfor {
 
     private String title = "";
     private String type = "";
     private boolean isPrimary;
 
-    public SqlFieldInfor() {
+    public FieldInfor() {
     }
 
-    public SqlFieldInfor(String title, String type, boolean isPrimary) {
+    public FieldInfor(String title, String type, boolean isPrimary) {
         this.title = title;
         this.type = type;
         this.isPrimary = isPrimary;

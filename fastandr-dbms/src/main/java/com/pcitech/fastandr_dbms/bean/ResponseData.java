@@ -27,16 +27,14 @@ import java.util.Map;
  * Created by amitshekhar on 15/11/16.
  */
 
-public class SqlResponse {
+public class ResponseData {
 
     private List<String> rows = new ArrayList<>();
-    private List<String> columns = new ArrayList<>();
-    List<SqlFieldInfor> allTablefield =new ArrayList<>();
+    List<FieldInfor> allTablefield = new ArrayList<>();
     List<Map<String, Object>> datas = new ArrayList<>();
 
     private boolean isSuccessful;
-    private String error;
-    private int dbVersion;
+    private String error = "";
 
     public List<String> getRows() {
         return rows;
@@ -44,14 +42,6 @@ public class SqlResponse {
 
     public void setRows(List<String> rows) {
         this.rows = rows;
-    }
-
-    public List<String> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<String> columns) {
-        this.columns = columns;
     }
 
     public boolean isSuccessful() {
@@ -70,19 +60,12 @@ public class SqlResponse {
         this.error = error;
     }
 
-    public int getDbVersion() {
-        return dbVersion;
-    }
 
-    public void setDbVersion(int dbVersion) {
-        this.dbVersion = dbVersion;
-    }
-
-    public List<SqlFieldInfor> getAllTablefield() {
+    public List<FieldInfor> getAllTablefield() {
         return allTablefield;
     }
 
-    public void setAllTablefield(List<SqlFieldInfor> allTablefield) {
+    public void setAllTablefield(List<FieldInfor> allTablefield) {
         this.allTablefield = allTablefield;
     }
 

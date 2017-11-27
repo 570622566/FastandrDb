@@ -1,10 +1,12 @@
 *.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/.idea/
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 /.gradle/
+/app/src/androidTest/
+/app/src/test/
+/fastandr-dbms/build/

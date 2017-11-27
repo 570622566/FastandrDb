@@ -2,13 +2,22 @@ var dbname = '';
 var columndata = [];
 var rowData;
 $(document).ready(function() {
-	getDBList()
 	$(document).on("click", ".list-group-item", function() {
 		$(this).addClass('active').siblings().removeClass('active');
+		if(this.getAttribute('id')=="db-list-item"){
+		    $('#toolbar').addClass("hidden");
+		    $('#table_datas').bootstrapTable('destroy');
+		}
 	});
+
+
 	$(document).on("click", "#query_bt", function() {
 		querydb();
 	});
+	$(document).on("click", "#download-bt", function() {
+		downloaddb();
+	});
+
 	$(function() {
 		$("[data-toggle='tooltip']").tooltip();
 	});
@@ -29,7 +38,10 @@ $(document).ready(function() {
 		"hideEasing": "linear",
 		"showMethod": "fadeIn",
 		"hideMethod": "fadeOut"
-	}
+	};
+
+	//获取数据库，shareprefence列表
+	getDBList();
 
 });
 
@@ -41,13 +53,17 @@ function getDBList() {
 		url: "/getDbList",
 		success: function(result) {
 			result = JSON.parse(result);
+			if(result.isSuccessful){
 			var dbList = result.rows;
 			$('#db-list').empty();
 			var appendls = '';
 			for(var count = 0; count < dbList.length; count++) {
-				appendls += "<a class='list-group-item' onClick=\"getTables('" + dbList[count] + "');\">" + dbList[count] + "</a>";
+				appendls += "<a id='db-list-item' class='list-group-item' onClick=\"getTables('" + dbList[count] + "');\">" + dbList[count] + "</a>";
 			}
 			$("#db-list").append(appendls);
+			}else{
+			toastr.error(result.error);
+			}
 		}
 	});
 }
@@ -58,12 +74,16 @@ function getDBList() {
  */
 function getTables(dbname) {
 	this.dbname = dbname;
-	$("#selected-db-info").text("当前选择的数据库是" + dbname);
-	$("#selected-db-info").removeClass("disabled");
+	$("#download-bt").text("当前选择的数据库是" + dbname);
+	$("#download-bt").removeClass("disabled");
+	$("#download-bt").removeAttr("disabled")
+
 	$.ajax({
 		url: "/getTables?dbname=" + dbname,
 		success: function(result) {
 			result = JSON.parse(result);
+
+			if(result.isSuccessful){
 			var tableList = result.rows;
 			$('#table-list').empty();
 			var appendtablels = '';
@@ -71,6 +91,9 @@ function getTables(dbname) {
 				appendtablels += "<a class='list-group-item' onClick=\"getTablesDatas('" + tableList[count] + "');\">" + tableList[count] + "</a>";
 			}
 			$("#table-list").append(appendtablels)
+			}else{
+            toastr.error(result.error);
+            }
 		}
 	});
 }
@@ -84,7 +107,10 @@ function getTablesDatas(tablename) {
 		url: "/getTableDatas?dbname=" + dbname + "&tableName=" + tablename,
 		success: function(result) {
 			result = JSON.parse(result);
-			console.log(result);
+			if(!result.isSuccessful){
+			toastr.error(result.error);
+			return;
+			}
 			var tableList = result.allTablefield;
 			columndata = [];
 			for(var count = 0; count < tableList.length; count++) {
@@ -120,7 +146,6 @@ function getTablesDatas(tablename) {
 		$('.success').removeClass('success'); //去除之前选中的行的，选中样式
 		$(element).addClass('success'); //添加当前选中的 success样式用于区别
 		rowData = row;
-		console.log(rowData)
 	});
 
 }
@@ -130,7 +155,6 @@ function getTablesDatas(tablename) {
  * 创造添加数据的表单
  */
 function addDataform() {
-	console.log(columndata);
 	var body = '';
 	$("#add-body").empty();
 		var pk='';
@@ -141,8 +165,25 @@ function addDataform() {
 	}else{
 		pk ="";
 	}
+
+		if(columndata[i].field == "dataType") {
+			body += "<div class=\"form-group\">" +
+				"<label class=\" control-label\">" + columndata[i].field + "</label>" +
+				"<select class=\"form-control\"" +" name='" + columndata[i].field + "' id='select_type'> "+
+				"<option>integer</option>" +
+				"<option>boolean</option>" +
+				"<option>float</option>" +
+				"<option>long</option>" +
+				"<option>set</option>" +
+				"<option>text</option>" +
+				"</select>"
+			"</div>";
+		}else{
 		body += "<div class=\"form-group\">" + " <label class=\" control-label\">" + columndata[i].field + "</label><div ><input type=\"text\" class=\"form-control\" " +
-			"name='" + columndata[i].field + "' "+pk +">  </div></div>";
+        			"name='" + columndata[i].field + "' "+pk +">  </div></div>";
+		}
+
+
 	}
 	$("#add-body").append(body);
 	$("#add_modal").modal('show');
@@ -161,22 +202,27 @@ function addData() {
     			toastr.error("添加的数据不能为空");
     			return;
     		}
-    		console.log($(addinput[i]).val());
     		addData += addinput[i].name + "=" + $(addinput[i]).val() + "&";
     }
+        var select=$("#add-body").find("select");
+        for(var i = 0; i < select.length; i++) {
+      		addData += select[i].name + "=" + $("#select_type option:selected").text() + "&";
+        }
+
     addData += "fdbname=" + dbname + "&ftablename=" +$("#table-list .active").text();
 	$.ajax({
 		url: "/addData",
 		data: addData,
 		success: function(result) {
-		console.log(result);
-			if(result == "success") {
-				$("#add_modal").modal('hide');
-				getTablesDatas($("#table-list .active").text());
-				toastr.success("添加数据成功");
-			} else {
-				alert("添加数据失败")
-			}
+					result = JSON.parse(result);
+		            if(!result.isSuccessful){
+        			toastr.error("添加数据失败",result.error);
+        			return;
+        			}
+				    $("#add_modal").modal('hide');
+				    getTablesDatas($("#table-list .active").text());
+				    toastr.success("添加数据成功");
+
 		}
 	});
 
@@ -195,13 +241,11 @@ function editDataform() {
 	$("#edit_body").empty();
 	var pk='';
 	for(var i = 0; i < columndata.length; i++) {
-
-	if(columndata[i].field.toLowerCase() =="id"||columndata[i].field.toLowerCase()=="_id"){
+	if(columndata[i].field.toLowerCase() =="id"||columndata[i].field.toLowerCase()=="_id"||columndata[i].field =="Key"||columndata[i].field =="dataType"){
 	pk ="disabled";
 	}else{
-		pk ="";
+	pk ="";
 	}
-	console.log("pk="+pk)
 		body += "<div class=\"form-group\">" + " <label class=\" control-label\">" + columndata[i].field + "</label><div ><input type='text' class='form-control' " +
 		"name='" + columndata[i].field + "' value='" + rowData[columndata[i].field] + "' "+pk +">  </div></div>";
 	}
@@ -222,21 +266,21 @@ function editData() {
     			toastr.error("添加的数据不能为空");
     			return;
     		}
-    		console.log($(editinput[i]).val());
     		editData += editinput[i].name + "=" + $(editinput[i]).val() + "&";
     }
-    editData += "fdbname=" + dbname + "&ftablename=" +$("#table-list .active").text();
-	$.ajax({
-		url: "/editData",
-		data: editData,
-		success: function(result) {
-			if(result == "success") {
+             editData += "fdbname=" + dbname + "&ftablename=" +$("#table-list .active").text();
+	        $.ajax({
+		        url: "/editData",
+		        data: editData,
+		        success: function(result) {
+		        result = JSON.parse(result);
+                if(!result.isSuccessful){
+                toastr.error("修改数据失败",result.error);
+                return;
+                }
 				$("#edit_modal").modal('hide');
 				getTablesDatas($("#table-list .active").text());
 				toastr.success("修改数据成功");
-			} else {
-				alert("修改数据失败")
-			}
 		}
 	});
 }
@@ -263,13 +307,14 @@ var delDatastr = columndata[0].field + "=" + rowData[columndata[0].field] +"&fdb
 		url: "/delData",
 		data: delDatastr,
 		success: function(result) {
-			if(result == "success") {
+		        result = JSON.parse(result);
+                if(!result.isSuccessful){
+                toastr.error("删除数据失败",result.error);
+                return;
+                }
 				$("#del_modal").modal('hide');
 				getTablesDatas($("#table-list .active").text());
 				toastr.success("删除数据成功");
-			} else {
-				alert("修改数据失败")
-			}
 		}
 	});
 }
@@ -278,34 +323,26 @@ var delDatastr = columndata[0].field + "=" + rowData[columndata[0].field] +"&fdb
  * 下载数据库
  */
 function downloaddb() {
+    var downloadName="";
 	if(!$("#db-list .list-group-item").hasClass("active")) {
 		toastr.error("请选择数据库");
 		return;
 	}
 	if($("#db-list .active").text()=="SHAREDPREFS_XML"){
-    		toastr.error("不支持sharedprefs下载");
-    		return;
+	if($("#table-list .list-group-item").hasClass("active")){
+        downloadName = $("#table-list .active").text();
+	}else{
+	    toastr.error("不支持sharedprefs的多xml下载，请选择单个下载");
+        		return;
+	}
+
     	}
 	const a = document.createElement('a');
-	a.setAttribute('href', "/downloaddb?dbname="+dbname);
-	a.setAttribute('download', dbname);
+	a.setAttribute('href', "/downloaddb?dbname="+dbname+downloadName);
+	a.setAttribute('download', downloadName);
 	a.click();
 }
 
 function querydb() {
 toastr.error("暂不支持自定义查询操作");
-//	if(!$("#db-list .list-group-item").hasClass("active")) {
-//		toastr.error("请选择数据库");
-//		return;
-//	}
-//	$.ajax({
-//		url: "/queryDb?dbname=" + dbname,
-//		success: function(result) {
-//			if(result == "success") {
-//				getTablesDatas($("#table-list .active").text());
-//			} else {
-//				alert("查询失败")
-//			}
-//		}
-//	});
 }

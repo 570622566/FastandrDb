@@ -6,6 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.pcitech.fastandr_dbms.utils.FSharedPrefsUtils;
+import com.pcitech.fastandrdb.bean.StudenBean;
+import com.pcitech.fastandrdb.bean.UserBean;
+
+import org.litepal.LitePal;
+import org.litepal.LitePalDB;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView iptv;
@@ -32,6 +42,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        FSharedPrefsUtils.putString("fastdb", "test1", "dddd--");
+        Set<String> strset = new HashSet<>();
+        strset.add("ddddddd");
+        strset.add("ddddddddddddddd");
+        FSharedPrefsUtils.putStringSet("fastdb", "test2", strset);
+
+        LitePalDB litePalDB = new LitePalDB("demo", 6);
+        litePalDB.addClassName(UserBean.class.getName());
+        LitePal.use(litePalDB);
+        UserBean userBean = new UserBean("pantom2", "12345678", 10, "13800138000", false, 20d);
+        userBean.save();
+        UserBean userBean2 = new UserBean("admin2", "admin", 10, "13800138000", true, 300d);
+        userBean2.save();
+
+        LitePalDB litePalDB2 = new LitePalDB("demo2", 1);
+        litePalDB2.addClassName(StudenBean.class.getName());
+        LitePal.use(litePalDB2);
+        StudenBean studenBean = new StudenBean("张三", "三班", "一年级");
+        studenBean.save();
+
+
     }
 
     @Override

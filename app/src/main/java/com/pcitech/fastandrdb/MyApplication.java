@@ -2,8 +2,11 @@ package com.pcitech.fastandrdb;
 
 import android.app.Application;
 
-import com.pcitech.fastandr_dbms.FSqlNetServer;
+import com.pcitech.fastandr_dbms.FDbNetServer;
 import com.pcitech.fastandr_dbms.utils.FDbUtils;
+
+import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 
@@ -16,9 +19,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LitePal.initialize(this);
         FDbUtils.init(this);
         try {
-            new FSqlNetServer(8888).start();
+            new FDbNetServer(8888).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

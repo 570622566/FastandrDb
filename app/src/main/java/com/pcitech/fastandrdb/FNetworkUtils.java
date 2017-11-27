@@ -1,22 +1,9 @@
 package com.pcitech.fastandrdb;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.telephony.TelephonyManager;
-
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.URLDecoder;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author laijian

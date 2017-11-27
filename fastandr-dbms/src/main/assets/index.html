@@ -20,6 +20,7 @@
 				word-break: break-all;
 			}
 
+
     </style>
 </head>
 
@@ -35,12 +36,11 @@
 <div class="container-fluid">
     <input type="text" class="form-control" id="query" placeholder="请输入查询语句"/>
     <div style="margin-top: 16px;">
-        <button id="selected-db-info" type="button" class="btn btn-info disabled"
-                onclick="downloaddb()" style="background-color: #29b6f6;" data-toggle="tooltip"
-                title="点击可下载数据库">当前没选择数据库
+        <button id="download-bt" type="button" class="btn btn-info disabled" style="background-color: #29b6f6;" data-toggle="tooltip"
+                title="点击可下载数据库" disabled="disabled">当前没选择数据库
         </button>
-        <button id="query_bt" type="submit" class="btn btn-info pull-right"
-                style="width: 120px;background-color: #29b6f6;">查询
+        <button id="query_bt" type="submit" class="btn btn-info pull-right disabled"
+                style="width: 120px;background-color: #29b6f6;" disabled="disabled">查询
         </button>
 
     </div>
