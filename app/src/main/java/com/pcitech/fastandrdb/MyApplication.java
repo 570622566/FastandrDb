@@ -2,13 +2,9 @@ package com.pcitech.fastandrdb;
 
 import android.app.Application;
 
-import com.pcitech.fastandr_dbms.FDbNetServer;
 import com.pcitech.fastandr_dbms.utils.FDbUtils;
 
 import org.litepal.LitePal;
-import org.litepal.crud.DataSupport;
-
-import java.io.IOException;
 
 /**
  * @author laijian
@@ -21,10 +17,5 @@ public class MyApplication extends Application {
         super.onCreate();
         LitePal.initialize(this);
         FDbUtils.init(this);
-        try {
-            new FDbNetServer(8888).start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -1,13 +1,10 @@
 package com.pcitech.fastandr_dbms;
 
-import com.google.gson.Gson;
 import com.pcitech.fastandr_dbms.bean.FieldInfor;
 import com.pcitech.fastandr_dbms.bean.ResponseData;
-import com.pcitech.fastandr_dbms.utils.FAssetsUtils;
 import com.pcitech.fastandr_dbms.utils.FConstant;
 import com.pcitech.fastandr_dbms.utils.FDatabaseUtils;
 import com.pcitech.fastandr_dbms.utils.FDbUtils;
-import com.pcitech.fastandr_dbms.utils.FFileUtils;
 import com.pcitech.fastandr_dbms.utils.FSharedPrefsUtils;
 
 import java.io.InputStream;
@@ -15,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import cn.hotapk.fhttpserver.utils.FFileUtils;
 
 
 /**
@@ -25,26 +24,13 @@ import java.util.Map;
  */
 public class SqlService {
 
-    /**
-     * 获取首页静态资源 css，js等
-     *
-     * @param filename
-     * @return
-     */
-    public static String index(String filename) {
-        if (filename.contains("/")) {
-            filename = filename.split("/")[1];
-        }
-        return FAssetsUtils.getAssetsToString(filename);
-    }
-
 
     /**
      * 获取数据库和sharedprefs列表
      *
      * @return
      */
-    public static String getDbList() {
+    public static ResponseData getDbList() {
         ResponseData responseData = new ResponseData();
         try {
             List<String> templs = Arrays.asList(FDbUtils.getAppContext().databaseList());
@@ -62,7 +48,7 @@ public class SqlService {
             responseData.setSuccessful(false);
             responseData.setError(e.getMessage());
         }
-        return new Gson().toJson(responseData);
+        return responseData;
     }
 
     /**
@@ -71,7 +57,7 @@ public class SqlService {
      * @param databaseName 数据库名称
      * @return
      */
-    public static String getTableList(String databaseName) {
+    public static ResponseData getTableList(String databaseName) {
         ResponseData responseData = new ResponseData();
         try {
             List<String> rows = new ArrayList<>();
@@ -93,7 +79,7 @@ public class SqlService {
             responseData.setError(e.getMessage());
 
         }
-        return new Gson().toJson(responseData);
+        return  responseData;
     }
 
     /**
@@ -103,7 +89,7 @@ public class SqlService {
      * @param tableName
      * @return
      */
-    public static String getTableDataList(String databaseName, String tableName) {
+    public static ResponseData getTableDataList(String databaseName, String tableName) {
         ResponseData responseData = new ResponseData();
 
         try {
@@ -123,7 +109,7 @@ public class SqlService {
             responseData.setSuccessful(false);
             responseData.setError(e.getMessage());
         }
-        return new Gson().toJson(responseData);
+        return responseData;
     }
 
     /**
@@ -132,7 +118,7 @@ public class SqlService {
      * @param parms
      * @return
      */
-    public static String addData(Map<String, String> parms) {
+    public static ResponseData addData(Map<String, String> parms) {
         ResponseData responseData = new ResponseData();
         boolean result;
         try {
@@ -152,7 +138,7 @@ public class SqlService {
         }
         responseData.setSuccessful(result);
 
-        return new Gson().toJson(responseData);
+        return responseData;
     }
 
     /**
@@ -161,7 +147,7 @@ public class SqlService {
      * @param parms
      * @return
      */
-    public static String editData(Map<String, String> parms) {
+    public static ResponseData editData(Map<String, String> parms) {
         ResponseData responseData = new ResponseData();
 
         boolean result;
@@ -181,7 +167,7 @@ public class SqlService {
             responseData.setError(e.getMessage());
         }
         responseData.setSuccessful(result);
-        return new Gson().toJson(responseData);
+        return responseData;
     }
 
     /**
@@ -190,7 +176,7 @@ public class SqlService {
      * @param parms
      * @return
      */
-    public static String delData(Map<String, String> parms) {
+    public static ResponseData delData(Map<String, String> parms) {
         ResponseData responseData = new ResponseData();
         boolean result;
         try {
@@ -213,7 +199,7 @@ public class SqlService {
             responseData.setError(e.getMessage());
         }
         responseData.setSuccessful(result);
-        return new Gson().toJson(responseData);
+        return responseData;
 
     }
 

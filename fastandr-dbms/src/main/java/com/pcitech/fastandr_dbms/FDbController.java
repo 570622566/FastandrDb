@@ -1,10 +1,16 @@
 package com.pcitech.fastandr_dbms;
 
-import com.pcitech.fastandr_dbms.utils.NanoHTTPD;
-import com.pcitech.fastandr_dbms.utils.RequestMapping;
+
+import com.pcitech.fastandr_dbms.bean.ResponseData;
+import com.pcitech.fastandr_dbms.utils.FConstant;
 
 import java.io.InputStream;
 import java.util.Map;
+
+import cn.hotapk.fhttpserver.NanoHTTPD;
+import cn.hotapk.fhttpserver.annotation.RequestMapping;
+import cn.hotapk.fhttpserver.annotation.RequestParam;
+import cn.hotapk.fhttpserver.annotation.ResponseBody;
 
 /**
  * @author laijian
@@ -14,58 +20,59 @@ import java.util.Map;
  */
 public class FDbController {
 
-
+    @ResponseBody
     @RequestMapping("getDbList")
-    public NanoHTTPD.Response getDbList() {
-        return setResponse(SqlService.getDbList());
+    public ResponseData getDbList() {
+        return SqlService.getDbList();
     }
 
+    @ResponseBody
     @RequestMapping("getTables")
-    public NanoHTTPD.Response getTables(Map<String, String> parms) {
-        String dbname = parms.get("dbname");
-        return setResponse(SqlService.getTableList(dbname));
+    public ResponseData getTables(@RequestParam("dbname") String dbname) {
+        return SqlService.getTableList(dbname);
     }
 
+    @ResponseBody
     @RequestMapping("getTableDatas")
-    public NanoHTTPD.Response getTableDatas(Map<String, String> parms) {
-        String dbname = parms.get("dbname");
-        String tableName = parms.get("tableName");
-        return setResponse(SqlService.getTableDataList(dbname, tableName));
+    public ResponseData getTableDatas(@RequestParam("dbname") String dbname, @RequestParam("tableName") String tableName) {
+        return SqlService.getTableDataList(dbname, tableName);
     }
 
+    @ResponseBody
     @RequestMapping("addData")
-    public NanoHTTPD.Response addData(Map<String, String> parms) {
-        return setResponse(SqlService.addData(parms));
+    public ResponseData addData(Map<String, String> parms) {
+        return SqlService.addData(parms);
     }
 
+    @ResponseBody
     @RequestMapping("delData")
-    public NanoHTTPD.Response delData(Map<String, String> parms) {
-        return setResponse(SqlService.delData(parms));
+    public ResponseData delData(Map<String, String> parms) {
+        return SqlService.delData(parms);
     }
 
-
+    @ResponseBody
     @RequestMapping("editData")
-    public NanoHTTPD.Response editData(Map<String, String> parms) {
-        return setResponse(SqlService.editData(parms));
+    public ResponseData editData(Map<String, String> parms) {
+        return SqlService.editData(parms);
     }
 
     @RequestMapping("queryDb")
-    public NanoHTTPD.Response queryDb(Map<String, String> parms) {
-        String dbname = parms.get("dbname");
-        return setResponse(SqlService.queryDb(dbname));
+    public String queryDb(@RequestParam("dbname") String dbname) {
+        return SqlService.queryDb(dbname);
     }
 
     @RequestMapping("downloaddb")
-    public NanoHTTPD.Response downloaddb(Map<String, String> parms) {
-        String dbname = parms.get("dbname");
+    public NanoHTTPD.Response downloaddb(@RequestParam("dbname") String dbname) {
         InputStream inputStream = SqlService.downloaddb(dbname);
         NanoHTTPD.Response response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, "application/octet-stream", inputStream);//这代表任意的二进制数据传输。
         response.addHeader("Accept-Ranges", "bytes");
+        if (dbname.contains(FConstant.SHAREDPREFS_XML)) {
+            dbname = dbname.replace(FConstant.SHAREDPREFS_XML, "");
+        }
+        response.addHeader("Content-Disposition", "attachment; filename=" + dbname);
+
         return response;
     }
 
 
-    public static NanoHTTPD.Response setResponse(String res) {
-        return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "application/octet-stream", res);
-    }
 }

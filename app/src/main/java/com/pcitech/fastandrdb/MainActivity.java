@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.pcitech.fastandr_dbms.FDbController;
 import com.pcitech.fastandr_dbms.utils.FSharedPrefsUtils;
 import com.pcitech.fastandrdb.bean.StudenBean;
 import com.pcitech.fastandrdb.bean.UserBean;
@@ -16,20 +17,26 @@ import org.litepal.LitePalDB;
 import java.util.HashSet;
 import java.util.Set;
 
+import cn.hotapk.fhttpserver.FHttpManager;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView iptv;
+
+    private FHttpManager fHttpManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         iptv = (TextView) findViewById(R.id.ip_tv);
-
+        fHttpManager = FHttpManager.init(this, FDbController.class);
+        fHttpManager.setPort(9999);//默认端口8080
         FPermissionUtils.requestPermissions(this, 200, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE}, new FPermissionUtils.OnPermissionListener() {
             @Override
             public void onPermissionGranted() {
-                iptv.setText("内网打开：http://"+FNetworkUtils.getIPAddress(true) + ":8888");
+                iptv.setText("内网打开：http://" + FNetworkUtils.getIPAddress(true) + ":" + fHttpManager.getPort());
+                fHttpManager.startServer();
             }
 
             @Override

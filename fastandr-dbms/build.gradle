@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'cn.hotapk:fhttpserver:0.3.0'
 }
