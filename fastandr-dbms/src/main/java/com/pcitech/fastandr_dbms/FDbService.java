@@ -4,7 +4,6 @@ import com.pcitech.fastandr_dbms.bean.FieldInfor;
 import com.pcitech.fastandr_dbms.bean.ResponseData;
 import com.pcitech.fastandr_dbms.utils.FConstant;
 import com.pcitech.fastandr_dbms.utils.FDatabaseUtils;
-import com.pcitech.fastandr_dbms.utils.FDbUtils;
 import com.pcitech.fastandr_dbms.utils.FSharedPrefsUtils;
 
 import java.io.InputStream;
@@ -22,7 +21,7 @@ import cn.hotapk.fhttpserver.utils.FFileUtils;
  * @Copyright (C)下午2:39 , www.hotapk.cn
  * 网络数据服务
  */
-public class SqlService {
+public class FDbService {
 
 
     /**
@@ -33,7 +32,7 @@ public class SqlService {
     public static ResponseData getDbList() {
         ResponseData responseData = new ResponseData();
         try {
-            List<String> templs = Arrays.asList(FDbUtils.getAppContext().databaseList());
+            List<String> templs = Arrays.asList(FDbManager.getAppContext().databaseList());
             List<String> rows = new ArrayList<>();
             for (int i = 0; i < templs.size(); i++) {
                 if (!templs.get(i).contains("-journal") && !templs.get(i).equals("undefined") && !templs.get(i).contains(".xml") && !templs.get(i).contains("shared_prefs")) {
@@ -79,7 +78,7 @@ public class SqlService {
             responseData.setError(e.getMessage());
 
         }
-        return  responseData;
+        return responseData;
     }
 
     /**
@@ -229,6 +228,6 @@ public class SqlService {
             return FFileUtils.file2Inp(FSharedPrefsUtils.getSharedPreferencePath(databaseName.replace(FConstant.SHAREDPREFS_XML, "")));
         }
 
-        return FFileUtils.file2Inp(FDbUtils.getAppContext().getDatabasePath(databaseName).getAbsolutePath());
+        return FFileUtils.file2Inp(FDbManager.getAppContext().getDatabasePath(databaseName).getAbsolutePath());
     }
 }

@@ -7,7 +7,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 
-import com.pcitech.fastandr_dbms.utils.FDbUtils;
+
+import com.pcitech.fastandr_dbms.FDbManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class FManifestUtils {
         List<String> perls = new ArrayList<>();
 
         try {
-            appInfo = FDbUtils.getAppContext().getPackageManager()
-                    .getPackageInfo(FDbUtils.getAppContext().getPackageName(),
+            appInfo = FDbManager.getAppContext().getPackageManager()
+                    .getPackageInfo(FDbManager.getAppContext().getPackageName(),
                             PackageManager.GET_PERMISSIONS);
             String[] perms = appInfo.requestedPermissions;
             for (String perm : perms) {

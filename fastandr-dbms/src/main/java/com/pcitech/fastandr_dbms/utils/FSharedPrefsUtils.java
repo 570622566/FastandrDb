@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.pcitech.fastandr_dbms.FDbManager;
+
 import org.json.JSONArray;
 
 import java.io.File;
@@ -28,7 +30,7 @@ public final class FSharedPrefsUtils {
 
 
     public static SharedPreferences getSharedPreferences(String name) {
-        return FDbUtils.getAppContext().getSharedPreferences(name, Activity.MODE_PRIVATE);
+        return FDbManager.getAppContext().getSharedPreferences(name, Activity.MODE_PRIVATE);
     }
 
 
@@ -125,7 +127,7 @@ public final class FSharedPrefsUtils {
     }
 
     public static String getSharePrefsRootPath() {
-        return FDbUtils.getAppContext().getApplicationInfo().dataDir + "/shared_prefs";
+        return FDbManager.getAppContext().getApplicationInfo().dataDir + "/shared_prefs";
 
     }
 
@@ -136,7 +138,7 @@ public final class FSharedPrefsUtils {
      * @return
      */
     public static List<Map<String, Object>> getPrefData(String prefname) {
-        SharedPreferences preferences = FDbUtils.getAppContext().getSharedPreferences(prefname.replace(".xml", ""), Context.MODE_PRIVATE);
+        SharedPreferences preferences = FDbManager.getAppContext().getSharedPreferences(prefname.replace(".xml", ""), Context.MODE_PRIVATE);
         Map<String, ?> entries = preferences.getAll();
         List<Map<String, Object>> datas = new ArrayList<>();
         for (Map.Entry<String, ?> entry : entries.entrySet()) {

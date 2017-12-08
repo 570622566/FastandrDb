@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.pcitech.fastandr_dbms.FDbManager;
 import com.pcitech.fastandr_dbms.bean.FieldInfor;
 import com.pcitech.fastandr_dbms.bean.ResponseData;
 
@@ -49,7 +50,7 @@ public final class FDatabaseUtils {
      * @return
      */
     public static SQLiteDatabase getDataBase(String databaseName) {
-        return SQLiteDatabase.openOrCreateDatabase(FDbUtils.getAppContext().getDatabasePath(databaseName), null);
+        return SQLiteDatabase.openOrCreateDatabase(FDbManager.getAppContext().getDatabasePath(databaseName), null);
     }
 
     /**

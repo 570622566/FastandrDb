@@ -2,8 +2,6 @@ package com.pcitech.fastandrdb;
 
 import android.app.Application;
 
-import com.pcitech.fastandr_dbms.utils.FDbUtils;
-
 import org.litepal.LitePal;
 
 /**
@@ -16,6 +14,5 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
-        FDbUtils.init(this);
     }
 }

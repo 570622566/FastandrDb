@@ -23,47 +23,47 @@ public class FDbController {
     @ResponseBody
     @RequestMapping("getDbList")
     public ResponseData getDbList() {
-        return SqlService.getDbList();
+        return FDbService.getDbList();
     }
 
     @ResponseBody
     @RequestMapping("getTables")
     public ResponseData getTables(@RequestParam("dbname") String dbname) {
-        return SqlService.getTableList(dbname);
+        return FDbService.getTableList(dbname);
     }
 
     @ResponseBody
     @RequestMapping("getTableDatas")
     public ResponseData getTableDatas(@RequestParam("dbname") String dbname, @RequestParam("tableName") String tableName) {
-        return SqlService.getTableDataList(dbname, tableName);
+        return FDbService.getTableDataList(dbname, tableName);
     }
 
     @ResponseBody
     @RequestMapping("addData")
     public ResponseData addData(Map<String, String> parms) {
-        return SqlService.addData(parms);
+        return FDbService.addData(parms);
     }
 
     @ResponseBody
     @RequestMapping("delData")
     public ResponseData delData(Map<String, String> parms) {
-        return SqlService.delData(parms);
+        return FDbService.delData(parms);
     }
 
     @ResponseBody
     @RequestMapping("editData")
     public ResponseData editData(Map<String, String> parms) {
-        return SqlService.editData(parms);
+        return FDbService.editData(parms);
     }
 
     @RequestMapping("queryDb")
     public String queryDb(@RequestParam("dbname") String dbname) {
-        return SqlService.queryDb(dbname);
+        return FDbService.queryDb(dbname);
     }
 
     @RequestMapping("downloaddb")
     public NanoHTTPD.Response downloaddb(@RequestParam("dbname") String dbname) {
-        InputStream inputStream = SqlService.downloaddb(dbname);
+        InputStream inputStream = FDbService.downloaddb(dbname);
         NanoHTTPD.Response response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, "application/octet-stream", inputStream);//这代表任意的二进制数据传输。
         response.addHeader("Accept-Ranges", "bytes");
         if (dbname.contains(FConstant.SHAREDPREFS_XML)) {
