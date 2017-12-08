@@ -1,4 +1,4 @@
-package com.pcitech.fastandrdb.bean;
+package cn.hotapk.fastandrdb.bean;
 
 import org.litepal.crud.DataSupport;
 

@@ -1,4 +1,4 @@
-package com.pcitech.fastandr_dbms;
+package cn.hotapk.fastandr_dbms;
 
 import android.content.Context;
 

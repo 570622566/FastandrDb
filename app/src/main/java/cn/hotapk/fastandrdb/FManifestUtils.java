@@ -1,14 +1,10 @@
-package com.pcitech.fastandrdb;
+package cn.hotapk.fastandrdb;
 
-import android.content.ComponentName;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
 
 
-import com.pcitech.fastandr_dbms.FDbManager;
+import cn.hotapk.fastandr_dbms.FDbManager;
 
 import java.util.ArrayList;
 import java.util.List;

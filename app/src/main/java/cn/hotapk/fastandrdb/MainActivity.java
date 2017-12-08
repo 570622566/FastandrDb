@@ -1,4 +1,4 @@
-package com.pcitech.fastandrdb;
+package cn.hotapk.fastandrdb;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -6,11 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.pcitech.fastandr_dbms.FDbController;
-import com.pcitech.fastandr_dbms.FDbManager;
-import com.pcitech.fastandr_dbms.utils.FSharedPrefsUtils;
-import com.pcitech.fastandrdb.bean.StudenBean;
-import com.pcitech.fastandrdb.bean.UserBean;
+import cn.hotapk.fastandr_dbms.FDbController;
+import cn.hotapk.fastandr_dbms.FDbManager;
+import cn.hotapk.fastandr_dbms.utils.FSharedPrefsUtils;
+import cn.hotapk.fastandrdb.bean.StudenBean;
+import cn.hotapk.fastandrdb.bean.UserBean;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalDB;

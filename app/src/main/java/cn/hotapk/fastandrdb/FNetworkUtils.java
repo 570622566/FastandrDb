@@ -1,4 +1,4 @@
-package com.pcitech.fastandrdb;
+package cn.hotapk.fastandrdb;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

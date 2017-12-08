@@ -1,10 +1,10 @@
-package com.pcitech.fastandr_dbms.utils;
+package cn.hotapk.fastandr_dbms.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.pcitech.fastandr_dbms.FDbManager;
+import cn.hotapk.fastandr_dbms.FDbManager;
 
 import org.json.JSONArray;
 

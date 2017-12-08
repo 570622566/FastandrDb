@@ -1,4 +1,4 @@
-package com.pcitech.fastandrdb;
+package cn.hotapk.fastandrdb;
 
 import android.app.Activity;
 import android.content.Context;

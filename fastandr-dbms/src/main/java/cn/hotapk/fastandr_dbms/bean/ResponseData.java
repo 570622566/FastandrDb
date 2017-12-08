@@ -1,4 +1,4 @@
-package com.pcitech.fastandr_dbms.bean;
+package cn.hotapk.fastandr_dbms.bean;
 
 import java.util.ArrayList;
 import java.util.List;

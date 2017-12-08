@@ -1,12 +1,12 @@
-package com.pcitech.fastandr_dbms.utils;
+package cn.hotapk.fastandr_dbms.utils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.pcitech.fastandr_dbms.FDbManager;
-import com.pcitech.fastandr_dbms.bean.FieldInfor;
-import com.pcitech.fastandr_dbms.bean.ResponseData;
+import cn.hotapk.fastandr_dbms.FDbManager;
+import cn.hotapk.fastandr_dbms.bean.FieldInfor;
+import cn.hotapk.fastandr_dbms.bean.ResponseData;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
