@@ -24,20 +24,21 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView iptv;
 
-    private FHttpManager fHttpManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         iptv = (TextView) findViewById(R.id.ip_tv);
-        fHttpManager = FDbManager.init(this).getFHttpManager(FDbController.class);
-        fHttpManager.setPort(9999);//默认端口8080
+        try {
+            FDbManager.init(this).startServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         FPermissionUtils.requestPermissions(this, 200, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE}, new FPermissionUtils.OnPermissionListener() {
             @Override
             public void onPermissionGranted() {
-                iptv.setText("内网打开：http://" + FNetworkUtils.getIPAddress(true) + ":" + fHttpManager.getPort());
-                fHttpManager.startServer();
+                iptv.setText("内网打开：http://" + FNetworkUtils.getIPAddress(true) + ":8080" );
             }
 
             @Override

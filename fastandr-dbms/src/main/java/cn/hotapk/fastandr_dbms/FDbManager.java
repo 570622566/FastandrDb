@@ -18,13 +18,20 @@ public class FDbManager {
 
     private FDbManager(Context context) {
         this.context = context;
+        fHttpManager = FHttpManager.init(context, FDbController.class);
     }
 
+    /**
+     * 初始化
+     *
+     * @param context
+     * @return
+     */
     public static FDbManager init(Context context) {
         if (dbManager == null) {
             synchronized (FDbManager.class) {
                 if (dbManager == null) {
-                    dbManager = new FDbManager(context);
+                    dbManager = new FDbManager(context.getApplicationContext());
                 }
             }
         }
@@ -32,17 +39,43 @@ public class FDbManager {
     }
 
     public static Context getAppContext() {
-        if (dbManager != null) return dbManager.context.getApplicationContext();
+        if (dbManager != null) return dbManager.context;
         throw new NullPointerException("To initialize first");
     }
 
     /**
-     * 获取http服务
+     * 设置端口号
      *
-     * @param cls 根据所提供的类，获取所有带RequestMapping注解的方法
+     * @param port
+     * @throws Exception
      */
-    public FHttpManager getFHttpManager(Class... cls) {
-        fHttpManager = FHttpManager.init(context, cls);
+    public void setPort(int port) throws Exception {
+        fHttpManager.setPort(port);
+        throw new Exception("please init FHttpManager");
+    }
+
+    /**
+     * 启动服务
+     */
+    public void startServer() throws Exception {
+        fHttpManager.startServer();
+        throw new Exception("please init FHttpManager");
+    }
+
+    /**
+     * 关闭服务
+     *
+     * @throws Exception
+     */
+    public void stopServer() throws Exception {
+        fHttpManager.stopServer();
+        throw new Exception("please init FHttpManager");
+    }
+
+    /**
+     * 获取http服务
+     */
+    public FHttpManager getFHttpManager() {
         return fHttpManager;
     }
 

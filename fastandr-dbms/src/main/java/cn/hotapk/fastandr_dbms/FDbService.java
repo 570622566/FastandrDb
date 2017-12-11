@@ -35,7 +35,7 @@ public class FDbService {
             List<String> templs = Arrays.asList(FDbManager.getAppContext().databaseList());
             List<String> rows = new ArrayList<>();
             for (int i = 0; i < templs.size(); i++) {
-                if (!templs.get(i).contains("-journal") && !templs.get(i).equals("undefined") && !templs.get(i).contains(".xml") && !templs.get(i).contains("shared_prefs")) {
+                if (!templs.get(i).matches(".*journal*.|undefined|.*xml|.*shared_prefs*.")) {
                     rows.add(templs.get(i));
                 }
             }
