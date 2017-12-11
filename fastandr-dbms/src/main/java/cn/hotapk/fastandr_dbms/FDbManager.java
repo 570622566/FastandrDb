@@ -15,6 +15,7 @@ public class FDbManager {
 
     private volatile static FDbManager dbManager;
     private FHttpManager fHttpManager;
+    private int port = 8888;
 
     private FDbManager(Context context) {
         this.context = context;
@@ -50,7 +51,7 @@ public class FDbManager {
      * @throws Exception
      */
     public void setPort(int port) throws Exception {
-        fHttpManager.setPort(port);
+        this.port = port;
         throw new Exception("please init FHttpManager");
     }
 
@@ -58,8 +59,13 @@ public class FDbManager {
      * 启动服务
      */
     public void startServer() throws Exception {
-        fHttpManager.startServer();
-        throw new Exception("please init FHttpManager");
+        if (fHttpManager == null) {
+            throw new Exception("please init FHttpManager");
+        } else {
+            fHttpManager.setPort(port);
+            fHttpManager.setIndexName("sqlindex.html");
+            fHttpManager.startServer();
+        }
     }
 
     /**
@@ -68,8 +74,11 @@ public class FDbManager {
      * @throws Exception
      */
     public void stopServer() throws Exception {
-        fHttpManager.stopServer();
-        throw new Exception("please init FHttpManager");
+        if (fHttpManager == null) {
+            throw new Exception("please init FHttpManager");
+        } else {
+            fHttpManager.stopServer();
+        }
     }
 
     /**

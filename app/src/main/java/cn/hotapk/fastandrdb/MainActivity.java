@@ -6,19 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import cn.hotapk.fastandr_dbms.FDbController;
-import cn.hotapk.fastandr_dbms.FDbManager;
-import cn.hotapk.fastandr_dbms.utils.FSharedPrefsUtils;
-import cn.hotapk.fastandrdb.bean.StudenBean;
-import cn.hotapk.fastandrdb.bean.UserBean;
-
 import org.litepal.LitePal;
 import org.litepal.LitePalDB;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import cn.hotapk.fhttpserver.FHttpManager;
+import cn.hotapk.fastandr_dbms.FDbManager;
+import cn.hotapk.fastandr_dbms.utils.FSharedPrefsUtils;
+import cn.hotapk.fastandrdb.bean.StudenBean;
+import cn.hotapk.fastandrdb.bean.UserBean;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         FPermissionUtils.requestPermissions(this, 200, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE}, new FPermissionUtils.OnPermissionListener() {
             @Override
             public void onPermissionGranted() {
-                iptv.setText("内网打开：http://" + FNetworkUtils.getIPAddress(true) + ":8080" );
+                iptv.setText("内网打开：http://" + FNetworkUtils.getIPAddress(true) + ":8888" );
             }
 
             @Override
