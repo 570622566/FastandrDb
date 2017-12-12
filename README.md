@@ -69,3 +69,8 @@ compile 'cn.hotapk:fastandr_dbms:0.4.0'
 fDbManager.setPort(9999);
 fDbManager.startServer();
 ```
+
+
+4. web查看
+
+浏览器打开 http://xxx.xxx.xxx.xxx:8888 即可
