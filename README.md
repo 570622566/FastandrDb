@@ -54,8 +54,18 @@ compile 'cn.hotapk:fastandr_dbms:0.4.0'
 
 ```
  try {
-            FDbManager.init(this).startServer();
+           FDbManager.init(this).startServer();
         } catch (Exception e) {
             e.printStackTrace();
         }
+```
+
+
+> 默认端口号为8888,如要配置,按以下方式
+
+
+```
+ FDbManager  fDbManager= FDbManager.init(this);
+fDbManager.setPort(9999);
+fDbManager.startServer();
 ```
